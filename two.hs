@@ -7,7 +7,7 @@ import Data.List
 null' x
   | x == [] = True
   | otherwise = False
-
+-- peter
 --pembatas
 
 take' 0 [x] = []
