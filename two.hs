@@ -7,18 +7,20 @@ import Data.List
 null' x
   | x == [] = True
   | otherwise = False
--- peter
+
 --pembatas
 
-take' 0 [x] = []
+take' 0 (x:xs) = []
 take' a [] = []
-take' a [x] = [x]
 take' a (x:xs) = [x] ++ take' (a-1) xs
 -- take 2 [1,2,3,4] = [1,2]
 
 --pembatas
 
-drop' x = x
+drop' 0 (x:xs) = (x:xs)
+drop' a [x] = []
+drop' a (x:xs) = drop' (a-1) xs
+-- drop 2 [1,2,3,4] = 3,4
 
 --pembatas
 
@@ -137,7 +139,7 @@ intercalate' x = x
 
 --pembatas
 
-and' x = x
+and' [] = True
 
 --pembatas
 
@@ -221,7 +223,9 @@ minimum' [x] = x
 maximum' [x] = x
 --pembatas
 
-inits' x = x
+inits' [] = [[]]
+--inits' [x] =[[],[x]]
+inits' (x:xs) = [[],[x],init' (x:xs),(x:xs)]
 
 --pembatas
 
