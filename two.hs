@@ -32,7 +32,8 @@ snd' (a, b) = b
 
 --pembatas
 
-map' x = x
+map' f [] = []
+map' f (x:xs) = f x : map' f xs
 
 --pembatas
 
@@ -40,12 +41,17 @@ filter' x = x
 
 --pembatas
 
-delete' x = x
-
+delete' _ [] = []
+delete' a (x:xs)
+  | a /= x = x : delete' a xs
+  | otherwise = delete' a xs
+-- still confused
+-- if delete' 2 [1,2,3,2,3] = [1,3,3] (delete all 2 from the list) my delete' will work
+-- but "delete" only delete first number from a not all of it
 --pembatas
 
 deleteAll' x = x
-
+-- i cannot search it on haskell
 --pembatas
 
 foldl' x = x
@@ -57,6 +63,9 @@ foldl1' x = x
 --pembatass
 zip' (x:xs) [] = []
 zip' [] (y:ys) = []
+zip' (x:xs) (y:ys) = [(x, y)] ++ zip' xs ys
+-- what im supposed to do?
+-- zip [1,3] [2,1] = [(1.2),(3,1)]
 
 --pembatas
 
@@ -161,7 +170,7 @@ or' x = x
 zip3' (x:xs) (y:ys) [] = []
 zip3' (x:xs) [] (z:zs) = []
 zip3' [] (y:ys) (z:zs) = []
---  confused jon
+-- masih bingung jon
 
 --pembatas
 
@@ -171,8 +180,9 @@ sum' (x:xs) = x + sum' xs
 
 --pembatas
 
-product' x = x
-
+product' [] = 1
+product' [x] = x
+product' (x:xs) = x * product' xs
 --pembatas
 
 words' x = x
@@ -203,7 +213,10 @@ concatMap' x = x
 
 --pembatas
 
-all' x = x
+all' f [] = True
+all' f (x:xs)
+  | f == (x:xs) = False
+-- confused
 
 --pembatas
 
@@ -224,28 +237,32 @@ zipWith3' x = x
 
 -- 1.b
 
-nub' x = x
-
+nub' [] = []
+--confused
 --pembatas
 
-sort' x = x
+sort' [] = []
+sort' [x] = [x]
+-- confused
 
 --pembatas
 
 minimum' [x] = x
--- confused (again) 
 --pembatas
 
-maximum' x = x
+maximum' [x] = x
 --pembatas
 
 inits' [] = [[]]
 --inits' [x] =[[],[x]]
 inits' (x:xs) = [[],[x],init' (x:xs),(x:xs)]
--- huft, confused
+--confused
 --pembatas
 
-tails' x = x
+tails' [] = [[]]
+tails' [x] = [[x],[]]
+tails' (x:xs) = [(x:xs), tail' (x:xs), tail' xs ]
+-- AGHHH how to rekur this fuction ?
 
 --pembatas
 
@@ -275,9 +292,7 @@ replicate' 0 x = []
   -- | a == 1 = [x]
   -- | otherwise = [x] ++ [x] ^ (a-1)
   -- replicate 3 [1,2,3] = [[1,2,3],[1,2,3],[1,2,3]]
-  -- confused
 
-tambah' a b
 -- 5 + 4  = 9
 -- 2 + 11 = 13
 -- 1 + 2 = 3
