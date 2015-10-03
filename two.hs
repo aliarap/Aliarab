@@ -54,9 +54,9 @@ foldl' x = x
 
 foldl1' x = x
 
---pembatas
-
-zip' x = x
+--pembatass
+zip' (x:xs) [] = []
+zip' [] (y:ys) = []
 
 --pembatas
 
@@ -76,11 +76,18 @@ scanl1' x = x
 
 --pembatas
 
-elem' x = x
+elem' a [] = False
+elem' a (x:xs)
+  | a /= x = elem' a xs
+  | a == x = True
 
 --pembatas
 
-notElem' x = x
+notElem' a [] = True
+notElem' a (x:xs)
+  | a /= x = notElem' a xs
+  | a == x = False
+
 
 --pembatas
 
@@ -127,27 +134,34 @@ min' a b
 
 --pembatas
 
-concat' x = x
+concat' [[]] = []
+concat' [[x]] = [x]
+concat' [(x:xs)] = (x:xs)
 
 --pembatas
 
-intersperse' x = x
+intersperse' a [] = []
+intersperse' a [x] = [x]
+intersperse' a (x:xs) = x : a : intersperse' a xs
+
+--pembatas
+intercalate' [] [[]] = []
+intercalate' (x:xs) [[]] = []
+intercalate' (x:xs) [(y:ys)] = (y:ys)
 
 --pembatas
 
-intercalate' x = x
-
---pembatas
-
-and' [] = True
+and' x = x
 
 --pembatas
 
 or' x = x
 
 --pembatas
-
-zip3' x = x
+zip3' (x:xs) (y:ys) [] = []
+zip3' (x:xs) [] (z:zs) = []
+zip3' [] (y:ys) (z:zs) = []
+--  confused jon
 
 --pembatas
 
@@ -197,7 +211,10 @@ any' x = x
 
 --pembatas
 
-insert' x = x
+insert' a [] = [a]
+insert' a (x:xs)
+  | a > x = x : insert' a xs
+  | otherwise = (a:x:xs)
 
 --pembatas
 
@@ -216,17 +233,16 @@ sort' x = x
 --pembatas
 
 minimum' [x] = x
-  -- minimum [1,2,3,4,0,(-1)] = -1
-
+-- confused (again) 
 --pembatas
 
-maximum' [x] = x
+maximum' x = x
 --pembatas
 
 inits' [] = [[]]
 --inits' [x] =[[],[x]]
 inits' (x:xs) = [[],[x],init' (x:xs),(x:xs)]
-
+-- huft, confused
 --pembatas
 
 tails' x = x
@@ -241,8 +257,9 @@ intersect' x = x
 
 --pembatas
 
-group' x = x
-
+group' [] = []
+group' [x] = [[x]]
+group' (x:xs) = [[x]] ++ group' xs
 --pembatas
 
 splitAt' x = x
@@ -253,4 +270,14 @@ partition' x = x
 
 --pembatas
 
-replicate' x = x
+replicate' 0 x = []
+--replicate' a x
+  -- | a == 1 = [x]
+  -- | otherwise = [x] ++ [x] ^ (a-1)
+  -- replicate 3 [1,2,3] = [[1,2,3],[1,2,3],[1,2,3]]
+  -- confused
+
+tambah' a b
+-- 5 + 4  = 9
+-- 2 + 11 = 13
+-- 1 + 2 = 3
